@@ -130,3 +130,49 @@
     </dependency>
   </dependencies>
 </project>
+this.isActionAllowed = function (action, jobSummary) {
+                if (jobSummary.status == undefined) {
+                    return;
+                }
+                status = jobSummary.status.toLowerCase();
+                switch (action.toLowerCase()) {
+                    case JOB_ACTION.SUSPEND:
+                        switch (status) {
+                            case JOB_STATUS.RUNNING:
+                            case JOB_STATUS.PENDING:
+                            case JOB_STATUS.WAITING:
+                            case JOB_STATUS.QUEUED:
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case JOB_ACTION.KILL:
+                        switch (status) {
+                            case JOB_STATUS.RUNNING:
+                            case JOB_STATUS.PENDING:
+                            case JOB_STATUS.SUSPENDED:
+                            case JOB_STATUS.WAITING:
+                            case JOB_STATUS.QUEUED:
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case JOB_ACTION.RESUME:
+                        switch (status) {
+                            case JOB_STATUS.SUSPENDED:
+                            case JOB_STATUS.PENDING:
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case JOB_ACTION.RESUBMIT:
+                        switch (status) {
+                            case JOB_STATUS.COMPLETED:
+                            case JOB_STATUS.COMPLETED_WITH_ERRORS:
+                            case JOB_STATUS.FAILED:
+                            case JOB_STATUS.KILLED:
+                            case JOB_STATUS.FAILED_TO_START:
+                                return true;
+                            default:
+                                return false;
+                        }
