@@ -17,6 +17,11 @@ jobs:
     
     - name: Build App
       run: mvn -f pom.xml -DskipITs package 
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      if: always()
+      with:
+        files: "test-results/**/*.xml"
     
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1.0.0
