@@ -25,11 +25,7 @@ jobs:
        path: target/myshuttle.war
 
         # Publishes the unit test results
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: target/surefire-reports/TEST-*.xml  
+     
 
     # - name: Generate a table of test results
     #   run: |
@@ -73,7 +69,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CanarysAutomations_MyShuttle -DskipITs
-
+     - name: Publish Test Results
+       uses: EnricoMi/publish-unit-test-result-action@v1
+       if: always()
+       with:
+        files: target/surefire-reports/TEST-*.xml
 
   run-lint:
     name: 🔍 Lint Code Base
