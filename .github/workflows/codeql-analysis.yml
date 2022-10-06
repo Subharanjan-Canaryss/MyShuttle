@@ -71,6 +71,6 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
     - name: CSV export
-      uses: some-natalie/ghas-to-csv@v2
+      uses: Subharanjan-Canaryss/ghas-to-csv@main
       env:
           GITHUB_PAT: ${{ secrets.ATOKEN }}
